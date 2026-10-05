@@ -1,0 +1,9 @@
+#cloud-config
+package_update: true
+packages:
+  - curl
+
+runcmd:
+  - iptables -I INPUT -p tcp --dport 6443 -j ACCEPT
+  - netfilter-persistent save
+  - curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${k3s_version}" INSTALL_K3S_EXEC="server --disable traefik" sh -
