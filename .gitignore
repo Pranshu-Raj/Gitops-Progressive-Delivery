@@ -1,0 +1,16 @@
+bin/
+*.exe
+.claude/
+
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+!terraform/*.tfvars.example
+terraform/*.tfplan
+
+kubeconfig*
+*.pem
+*.key
+.env
+sbom*.json
