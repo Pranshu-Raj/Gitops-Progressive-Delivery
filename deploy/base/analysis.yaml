@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate
+spec:
+  args:
+    - name: canary-hash
+  metrics:
+    - name: success-rate
+      interval: 30s
+      failureLimit: 1
+      successCondition: isNaN(result[0]) || result[0] >= 0.95
+      provider:
+        prometheus:
+          address: http://prometheus.monitoring.svc:9090
+          query: |
+            sum(rate(http_requests_total{app="demo", path="/", rollouts_pod_template_hash="{{args.canary-hash}}", code!~"5.."}[1m]))
+            /
+            sum(rate(http_requests_total{app="demo", path="/", rollouts_pod_template_hash="{{args.canary-hash}}"}[1m]))

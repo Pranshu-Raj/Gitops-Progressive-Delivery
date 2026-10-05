@@ -1,0 +1,47 @@
+nameReference:
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - kind: Rollout
+        path: spec/template/spec/containers/env/valueFrom/configMapKeyRef/name
+      - kind: Rollout
+        path: spec/template/spec/containers/envFrom/configMapRef/name
+      - kind: Rollout
+        path: spec/template/spec/volumes/configMap/name
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - kind: Rollout
+        path: spec/template/spec/containers/env/valueFrom/secretKeyRef/name
+      - kind: Rollout
+        path: spec/template/spec/containers/envFrom/secretRef/name
+      - kind: Rollout
+        path: spec/template/spec/volumes/secret/secretName
+      - kind: Rollout
+        path: spec/template/spec/imagePullSecrets/name
+  - kind: Service
+    version: v1
+    fieldSpecs:
+      - kind: Rollout
+        path: spec/strategy/blueGreen/activeService
+      - kind: Rollout
+        path: spec/strategy/blueGreen/previewService
+      - kind: Rollout
+        path: spec/strategy/canary/stableService
+      - kind: Rollout
+        path: spec/strategy/canary/canaryService
+  - kind: AnalysisTemplate
+    group: argoproj.io
+    fieldSpecs:
+      - kind: Rollout
+        path: spec/strategy/canary/analysis/templates/templateName
+      - kind: Rollout
+        path: spec/strategy/canary/steps/analysis/templates/templateName
+      - kind: Rollout
+        path: spec/strategy/blueGreen/prePromotionAnalysis/templates/templateName
+      - kind: Rollout
+        path: spec/strategy/blueGreen/postPromotionAnalysis/templates/templateName
+
+replicas:
+  - kind: Rollout
+    path: spec/replicas
